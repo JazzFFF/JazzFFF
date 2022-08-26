@@ -45,4 +45,9 @@ mod tests {
     // fn async_main_abc() {
     //     println!("main");
     // }
+    #[test]
+    fn test_request_client_func(){
+        println!("request_client_func() called with client1111");
+        request_client_func();
+    }
 }

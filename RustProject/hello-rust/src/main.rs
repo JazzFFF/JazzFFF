@@ -8,6 +8,7 @@ mod test_box;
 pub use test_box::*;
 
 mod test_closure;
+mod test_request;
 
 #[derive(Debug)]
 struct User {
@@ -20,6 +21,22 @@ enum Action {
     Name(String),
     Point(i32,i32),
     Color(i32,i32,i32),
+}
+
+mod test_thread;
+use tokio::time::Duration;
+use std::thread::sleep;
+
+async fn test_tioio() {
+    println!("Testing thread...");
+    //主线程
+    tokio::task::spawn_blocking(|| {
+        //运行在一个阻塞的线程，可以看作是一个比较耗时的操作
+        sleep(Duration::from_millis(10000));
+        println!("hi");
+    }).await.unwrap();//使用await关键字等待阻塞线程的任务完成
+    //要等待阻塞线程完成后，主线程才能执行
+    println!("hello");
 }
 
 fn main() {
@@ -43,7 +60,7 @@ fn main() {
         let val = gen_point.get_x() + gen_point.get_y();
         println!("{}",  val);
     }
-    if true {//Test 特征
+    if false {//Test 特征
         //测试为结构体接口定义特征
         let post = test_generics::Post{
             title:String::from("中国人"),
@@ -70,7 +87,7 @@ fn main() {
     }
 
     {   //测试智能指针 box
-
+        test_tioio();
     }
 
 }
